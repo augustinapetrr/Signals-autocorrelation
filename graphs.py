@@ -6,7 +6,7 @@ def graphs_rendering(og_data, autocorrelation_data):
     # MONTHLY NATURAL GAS PRICES GRAPH
 
     # Convert dates to datetime format and extract prices
-    x_1 = [datetime.strptime(item[0], "%Y-%m") if len(item[0]) == 7 else datetime.strptime(item[0], "%Y-%m-%d") for item in og_data]
+    x_1 = [datetime.strptime(str(item[0]), "%Y-%m") if len(str(item[0])) == 7 else datetime.strptime(str(item[0]), "%Y-%m-%d") if len(str(item[0])) == 10 else datetime.strptime(str(item[0]), "%Y") for item in og_data]
     y_1 = [item[1] for item in og_data]
 
     x_2 = [item[0] for item in autocorrelation_data]
