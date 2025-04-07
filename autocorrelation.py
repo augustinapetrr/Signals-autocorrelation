@@ -7,17 +7,17 @@ def f_function(N, d, f, flag):
     else:
         temp = d
     for i in range(N - d):
-        f_sum = f_sum + f[temp + i][1]
+        if f[temp + i][1] is not None and not math.isnan(f[temp + i][1]):
+            f_sum += f[temp + i][1]
     return (1 / (N - d + 1)) * f_sum
-
 
 def autocorrelation_function(f):
     N = len(f)
     Nd = int(N / 2)
     r = []
 
-    #print(N) 339
-    #print(Nd) 169
+    #print(N)
+    #print(Nd)
 
     for d in range(Nd):
         top = 0
@@ -25,17 +25,30 @@ def autocorrelation_function(f):
         temp_b1 = 0
         temp_b2 = 0
 
+        f_minus = f_function(N, d, f, 0)
+        F_minus = f_function(N, d, f, 1)
+
+        count = 0 # tracking how many not empty points are used
+
         for j in range(N - d):
-            #FORMULA TOP PART
-            temp = (f[j][1] - f_function(N, d, f, 0)) * (f[d + j][1] - f_function(N, d, f, 1))
-            top = top + temp
-            
-            #FORMULA BOTTOM PART
-            temp = (f[j][1] - f_function(N, d, f, 0)) ** 2
-            temp_b1 = temp_b1 + temp
-            temp = (f[d + j][1] - f_function(N, d, f, 1)) ** 2
-            temp_b2 = temp_b2 + temp
-        bottom = math.sqrt(temp_b1 * temp_b2)
-               
-        r.append([d, top / bottom])
+
+            if f[j][1] is not None and f[d + j][1] is not None and not math.isnan(f[j][1]) and not math.isnan(f[d + j][1]):
+                temp1 = float(f[j][1]) - f_minus
+                temp2 = float(f[d + j][1]) - F_minus
+
+                #FORMULA TOP PART
+                top += temp1 * temp2
+                
+                #FORMULA BOTTOM PART
+                temp_b1 += temp1 ** 2
+                temp_b2 += temp2 ** 2
+
+                count += 1
+
+        if count == 0 or temp_b1 == 0 or temp_b2 == 0:
+            r.append([d, float("nan")])
+        else:
+            bottom = math.sqrt(temp_b1 * temp_b2)
+            r.append([d, top / bottom])
+
     return r

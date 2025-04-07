@@ -6,7 +6,7 @@ def graphs_rendering(og_data, autocorrelation_data):
     # MONTHLY NATURAL GAS PRICES GRAPH
 
     # Convert dates to datetime format and extract prices
-    x_1 = [datetime.strptime(item[0], "%Y-%m") for item in og_data]
+    x_1 = [datetime.strptime(item[0], "%Y-%m") if len(item[0]) == 7 else datetime.strptime(item[0], "%Y-%m-%d") for item in og_data]
     y_1 = [item[1] for item in og_data]
 
     x_2 = [item[0] for item in autocorrelation_data]
@@ -31,29 +31,4 @@ def graphs_rendering(og_data, autocorrelation_data):
 
     # Adjust layout and show the plot
     plt.tight_layout()
-    plt.show()
-
-
-
-
-    '''# Plotting
-    fig, ax = plt.subplots(figsize=(10, 5))
-    ax.plot(dates, prices, color='blue', marker='o', linewidth=2, label='Natural Gas Prices')
-
-    # Format x-axis for dates
-    ax.xaxis.set_major_locator(mdates.YearLocator(2)) # every 2 years
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
-    plt.xticks(rotation=45)
-
-    # Title and labels
-    ax.set_title("Natural Gas Prices Over Time", fontsize=14)
-    ax.set_xlabel("Date", fontsize=12)
-    ax.set_ylabel("Price", fontsize=12)
-
-    # Add grid and legend
-    ax.grid(True)
-
-    # Adjust layout and show the plot
-    plt.tight_layout()
-    plt.show()'''
-    
+    plt.show()    
