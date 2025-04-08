@@ -52,3 +52,11 @@ def autocorrelation_function(f):
             r.append([d, top / bottom])
 
     return r
+
+def inertia_duration(autocorr_data):
+    threshold = 0.1
+    for lag, r_value in autocorr_data:
+        if r_value < threshold:
+            return lag
+    # If it was never less than threshold, then we return max lag
+    return autocorr_data[-1][0]
