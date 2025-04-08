@@ -35,3 +35,12 @@ ltu_population = signal_preparation.get_data("data/Lithuania-population.csv", 'D
 autocor_ltu_population = autocorrelation.autocorrelation_function(ltu_population)
 print(f"Inertia duration: {autocorrelation.inertia_duration(autocor_ltu_population)} years")
 graphs.graphs_rendering(ltu_population, autocor_ltu_population, "Years", 5)
+
+# Noised monthly natural gas prices
+print("Noised monthly natural gas prices")
+noise_levels = [2.8, 4.5, 9.0]
+noised_natural_gas_prices = autocorrelation.signal_with_noise(natural_gas_prices, noise_levels)
+for i in range(len(noise_levels)):
+    autocor_noised = autocorrelation.autocorrelation_function(noised_natural_gas_prices[i])
+    print(f"Inertia duration: {autocorrelation.inertia_duration(autocor_noised)} months")
+    graphs.graphs_rendering(noised_natural_gas_prices[i], autocor_noised, "Months", 2)
