@@ -1,4 +1,4 @@
-from imports import plt, mdates
+from imports import plt, mdates, np
 from datetime import datetime
 
 def graphs_rendering(og_data, autocorrelation_data, ax2_xlabel, years):
@@ -14,7 +14,7 @@ def graphs_rendering(og_data, autocorrelation_data, ax2_xlabel, years):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))  # 1 row, 2 columns
 
     # First graph
-    ax1.plot(x_1, y_1, color='pink', marker='o', linewidth=2, markersize=4)
+    ax1.plot(x_1, y_1, color='pink', linewidth=1.5)
     ax1.xaxis.set_major_locator(mdates.YearLocator(years))
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
     ax1.set_title("Signal")
@@ -22,7 +22,7 @@ def graphs_rendering(og_data, autocorrelation_data, ax2_xlabel, years):
     ax1.tick_params(axis='x', rotation=45)
 
     # Second graph
-    ax2.plot(x_2, y_2, color='purple', marker='o', linewidth=2, markersize=4)
+    ax2.plot(x_2, y_2, color='purple', linewidth=1.5)
     ax2.set_title("Autocorrelation function")
     ax2.grid(True)
     ax2.set_xlabel(ax2_xlabel, fontsize=12)
