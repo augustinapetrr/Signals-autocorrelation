@@ -43,6 +43,14 @@ autocor_ltu_population = autocorrelation.autocorrelation_function(ltu_population
 print(f"Inertia duration: {autocorrelation.inertia_duration(autocor_ltu_population, len(autocor_ltu_population))} years")
 graphs.graphs_rendering(ltu_population, autocor_ltu_population, "Metai", 5)
 
+# China share prices
+print("China share prices")
+china_shares = signal_preparation.get_data("data/SPASTT01CNM657N.csv", 'observation_date', 'SPASTT01CNM657N')
+autocor_china_shares = autocorrelation.autocorrelation_function(china_shares)
+print(f"Inertia duration: {autocorrelation.inertia_duration(autocor_china_shares, len(autocor_china_shares))} months")
+graphs.graphs_rendering(china_shares, autocor_china_shares, "Mėnesiai", 2)
+
+
 # Noised monthly natural gas prices
 print("Noised monthly natural gas prices")
 noise_levels = [2.8, 4.5, 9.0]
@@ -50,7 +58,7 @@ noised_natural_gas_prices = autocorrelation.signal_with_noise(natural_gas_prices
 for i in range(len(noise_levels)):
     autocor_noised = autocorrelation.autocorrelation_function(noised_natural_gas_prices[i])
     print(f"Inertia duration: {autocorrelation.inertia_duration(autocor_noised, len(autocor_noised))} months")
-    graphs.graphs_rendering(noised_natural_gas_prices[i], autocor_noised, "Menesiai", 2)
+    graphs.graphs_rendering(noised_natural_gas_prices[i], autocor_noised, "Mėnesiai", 2)
 
 
 
